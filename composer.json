@@ -1,0 +1,12 @@
+{
+    "name": "tomzab/timthumb",
+    "description": "TimThumb – PHP Image Resizer with Auto Rotate",
+    "authors": [{
+        "name": "Tomek Zaborowski",
+        "email": "tomzab.bdw@gmail.com"
+    }],
+    "require": {},
+    "autoload": {
+        "classmap": ["./"]
+    }
+}

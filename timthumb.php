@@ -525,7 +525,7 @@ class timthumb {
 		$sharpen = (bool) $this->param('s', DEFAULT_S);
 		$canvas_color = $this->param('cc', DEFAULT_CC);
 		$canvas_trans = (bool) $this->param('ct', '1');
-		$auto_rotate = (bool) $this->param('ar', '0');
+		$auto_rotate = (bool) $this->param('ar', '1');
 
 		// set default width and height if neither are set already
 		if ($new_width == 0 && $new_height == 0) {
@@ -550,17 +550,19 @@ class timthumb {
 		// ref : http://www.neilyoungcv.com/blog/code-share/image-resizing-with-php-exif-orientation-fix/
 		if($auto_rotate && preg_match('/^image\/(?:jpg|jpeg)$/i', $mimeType)){ 
 			$exif = exif_read_data($localImage);
-			$ort = $exif['Orientation'];
-			switch($ort) {
-				case 3: // 180 rotate left
-					$image = imagerotate($image, 180, -1);
-					break;
-				case 6: // 	90 rotate right
-					$image = imagerotate($image, -90, -1);
-					break;
-				case 8: // 	90 rotate left
-					$image = imagerotate($image, 90, -1);
-					break;
+			if (!empty($exif['Orientation'])) {
+				$ort = $exif['Orientation'];
+				switch($ort) {
+					case 3: // 180 rotate left
+						$image = imagerotate($image, 180, -1);
+						break;
+					case 6: // 	90 rotate right
+						$image = imagerotate($image, -90, -1);
+						break;
+					case 8: // 	90 rotate left
+						$image = imagerotate($image, 90, -1);
+						break;
+				}
 			}
 		}
 
